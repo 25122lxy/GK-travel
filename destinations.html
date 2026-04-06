@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>精选行程 | KANG Voyages</title>
+
+    <meta name="description" content="KANG Voyages 精选旅行路线 — 国内隐奢秘境、欧洲浪漫之旅、海岛度假等高端定制行程。">
+    <meta name="robots" content="index, follow">
+
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        .page-nav {
+            position: fixed; top: 0; left: 0; width: 100%; height: var(--nav-height);
+            background-color: rgba(255,255,255,0.95); backdrop-filter: blur(15px);
+            box-shadow: 0 4px 20px rgba(255,139,167,0.1); z-index: 1000;
+        }
+        .page-nav .nav-container { display: flex; justify-content: space-between; align-items: center; height: 100%; }
+        .page-nav .logo { color: var(--primary); }
+        .page-nav .logo small { color: var(--text-light); }
+        .page-hero {
+            padding-top: calc(var(--nav-height) + 60px); padding-bottom: 50px;
+            background-color: var(--accent); text-align: center;
+        }
+        .page-hero .section-subtitle { margin-bottom: 0.75rem; }
+        .page-hero h1 { font-size: 2.8rem; color: var(--primary); margin-bottom: 1rem; }
+        .page-hero .hero-desc { color: var(--text-light); font-size: 1.05rem; margin-bottom: 0; max-width: 600px; margin-left: auto; margin-right: auto; }
+        .filter-bar {
+            max-width: 1000px; margin: 40px auto 0; display: flex; justify-content: center; gap: 16px; flex-wrap: wrap;
+        }
+        .filter-btn {
+            padding: 10px 28px; border: 1px solid rgba(255,139,167,0.3); border-radius: 40px;
+            background: transparent; color: var(--text-main); font-family: var(--font-body);
+            font-size: 0.85rem; letter-spacing: 1px; cursor: pointer; transition: var(--transition-fast);
+        }
+        .filter-btn:hover, .filter-btn.active {
+            background-color: var(--secondary); color: var(--white); border-color: var(--secondary);
+        }
+        .page-content { max-width: 1100px; margin: 0 auto; padding: 50px 24px 80px; }
+        .routes-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px;
+        }
+        .route-card {
+            border-radius: 16px; overflow: hidden; background-color: var(--white);
+            box-shadow: 0 8px 25px rgba(255,139,167,0.06); transition: var(--transition-fast);
+        }
+        .route-card:hover { transform: translateY(-6px); box-shadow: 0 16px 35px rgba(255,139,167,0.14); }
+        .route-img-wrap { position: relative; height: 240px; overflow: hidden; }
+        .route-img-wrap img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
+        .route-card:hover .route-img-wrap img { transform: scale(1.05); }
+        .route-tag {
+            position: absolute; top: 16px; left: 16px; padding: 6px 14px;
+            background-color: rgba(255,255,255,0.92); backdrop-filter: blur(6px);
+            border-radius: 20px; font-size: 0.75rem; font-weight: 600;
+            text-transform: uppercase; letter-spacing: 1px; color: var(--secondary);
+        }
+        .route-body { padding: 24px; }
+        .route-body h3 { font-size: 1.2rem; color: var(--primary); margin-bottom: 8px; line-height: 1.4; }
+        .route-meta { display: flex; gap: 16px; margin-bottom: 12px; font-size: 0.82rem; color: var(--text-light); }
+        .route-meta span { display: flex; align-items: center; gap: 5px; }
+        .route-meta i { color: var(--secondary); font-size: 0.75rem; }
+        .route-body p { font-size: 0.9rem; color: var(--text-light); margin-bottom: 16px; line-height: 1.7; }
+        .route-footer { display: flex; justify-content: space-between; align-items: center; padding-top: 16px; border-top: 1px solid var(--accent); }
+        .route-price { font-size: 0.85rem; color: var(--text-light); }
+        .route-price strong { font-size: 1.2rem; color: var(--secondary); font-weight: 600; }
+        .route-btn {
+            padding: 8px 22px; border: 1px solid var(--secondary); border-radius: 40px;
+            background: transparent; color: var(--secondary); font-family: var(--font-body);
+            font-size: 0.8rem; letter-spacing: 1px; cursor: pointer; transition: var(--transition-fast);
+            text-decoration: none;
+        }
+        .route-btn:hover { background-color: var(--secondary); color: var(--white); }
+        .page-footer {
+            background-color: var(--white); border-top: 1px solid rgba(255,139,167,0.2);
+            padding: 30px 0; text-align: center;
+        }
+        .page-footer p { font-size: 0.85rem; color: var(--text-light); margin-bottom: 0; }
+        .btn-back {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 0.7rem 1.8rem; font-family: var(--font-body); font-size: 0.85rem;
+            letter-spacing: 1px; text-decoration: none; border: 1px solid var(--secondary);
+            color: var(--secondary); border-radius: 40px; transition: var(--transition-fast);
+        }
+        .btn-back:hover {
+            background-color: var(--secondary); color: var(--white);
+            transform: translateY(-2px); box-shadow: 0 6px 15px rgba(255,139,167,0.3);
+        }
+        @media (max-width: 768px) {
+            .page-hero h1 { font-size: 2rem; }
+            .page-content { padding: 40px 20px 60px; }
+            .routes-grid { grid-template-columns: 1fr; }
+        }
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .routes-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+    </style>
+</head>
+<body>
+    <header class="page-nav">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                KANG <span>Voyages</span>
+                <small>港客旅行社有限公司</small>
+            </a>
+            <a href="index.html" class="btn-back"><i class="fas fa-arrow-left"></i> 返回首页</a>
+        </div>
+    </header>
+
+    <section class="page-hero">
+        <div class="container">
+            <span class="section-subtitle">Curated Journeys</span>
+            <h1>精选行程</h1>
+            <p class="hero-desc">每一条路线都经过我们精心甄选与设计，只为给您最极致的旅行体验。</p>
+            <div class="filter-bar">
+                <button class="filter-btn active" data-filter="all">全部</button>
+                <button class="filter-btn" data-filter="domestic">国内精选</button>
+                <button class="filter-btn" data-filter="asia">亚洲周边</button>
+                <button class="filter-btn" data-filter="europe">欧洲浪漫</button>
+                <button class="filter-btn" data-filter="island">海岛度假</button>
+            </div>
+        </div>
+    </section>
+
+    <main class="page-content">
+        <div class="routes-grid">
+
+            <div class="route-card" data-category="domestic">
+                <div class="route-img-wrap">
+                    <img src="images/dest-china.jpg" alt="云南大理" loading="lazy">
+                    <span class="route-tag">国内</span>
+                </div>
+                <div class="route-body">
+                    <h3>云南大理 · 苍山洱海隐奢之旅</h3>
+                    <div class="route-meta">
+                        <span><i class="fas fa-clock"></i> 6天5晚</span>
+                        <span><i class="fas fa-map-marker-alt"></i> 大理 / 丽江</span>
+                    </div>
+                    <p>入住苍山脚下的隐奢民宿，清晨环洱海骑行，午后在古城咖啡馆发呆，夜晚仰望星空。全程私人向导，避开人潮，只留静谧。</p>
+                    <div class="route-footer">
+                        <div class="route-price">人均 <strong>¥8,800</strong> 起</div>
+                        <a href="#contact" class="route-btn" onclick="window.location.href='index.html#contact'">立即咨询</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="route-card" data-category="domestic">
+                <div class="route-img-wrap">
+                    <img src="images/dest-china.jpg" alt="三亚" loading="lazy">
+                    <span class="route-tag">国内</span>
+                </div>
+                <div class="route-body">
+                    <h3>三亚 · 私人海滩度假</h3>
+                    <div class="route-meta">
+                        <span><i class="fas fa-clock"></i> 5天4晚</span>
+                        <span><i class="fas fa-map-marker-alt"></i> 三亚</span>
+                    </div>
+                    <p>入住亚龙湾一线海景别墅，享受私人沙滩、游艇出海、SPA 水疗。为追求极致放松的您量身打造的避世假期。</p>
+                    <div class="route-footer">
+                        <div class="route-price">人均 <strong>¥12,800</strong> 起</div>
+                        <a href="#contact" class="route-btn" onclick="window.location.href='index.html#contact'">立即咨询</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="route-card" data-category="asia">
+                <div class="route-img-wrap">
+                    <img src="images/dest-paris.jpg" alt="日本京都" loading="lazy">
+                    <span class="route-tag">亚洲</span>
+                </div>
+                <div class="route-body">
+                    <h3>日本京都 · 和风美学之旅</h3>
+                    <div class="route-meta">
+                        <span><i class="fas fa-clock"></i> 7天6晚</span>
+                        <span><i class="fas fa-map-marker-alt"></i> 京都 / 大阪 / 奈良</span>
+                    </div>
+                    <p>入住百年町屋改造的精品旅馆，体验茶道、花道、和服变装。在岚山竹林中漫步，于奈良公园与鹿共舞。一场穿越千年的美学之旅。</p>
+                    <div class="route-footer">
+                        <div class="route-price">人均 <strong>¥15,800</strong> 起</div>
+                        <a href="#contact" class="route-btn" onclick="window.location.href='index.html#contact'">立即咨询</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="route-card" data-category="europe">
+                <div class="route-img-wrap">
+                    <img src="images/dest-paris.jpg" alt="巴黎" loading="lazy">
+                    <span class="route-tag">欧洲</span>
+                </div>
+                <div class="route-body">
+                    <h3>法国巴黎 · 浪漫艺术之旅</h3>
+                    <div class="route-meta">
+                        <span><i class="fas fa-clock"></i> 8天7晚</span>
+                        <span><i class="fas fa-map-marker-alt"></i> 巴黎 / 凡尔赛 / 卢瓦尔河谷</span>
+                    </div>
+                    <p>塞纳河私人游船晚宴、卢浮宫 VIP 免排队导览、凡尔赛宫深度游。入住左岸百年精品酒店，感受真正的法式浪漫与优雅。</p>
+                    <div class="route-footer">
+                        <div class="route-price">人均 <strong>¥28,800</strong> 起</div>
+                        <a href="#contact" class="route-btn" onclick="window.location.href='index.html#contact'">立即咨询</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="route-card" data-category="europe">
+                <div class="route-img-wrap">
+                    <img src="images/dest-paris.jpg" alt="意大利" loading="lazy">
+                    <span class="route-tag">欧洲</span>
+                </div>
+                <div class="route-body">
+                    <h3>意大利 · 托斯卡纳田园之旅</h3>
+                    <div class="route-meta">
+                        <span><i class="fas fa-clock"></i> 10天9晚</span>
+                        <span><i class="fas fa-map-marker-alt"></i> 佛罗伦萨 / 托斯卡纳 / 罗马</span>
+                    </div>
+                    <p>入住托斯卡纳山间庄园，参加私人酒庄品鉴、手工意面制作课程。在佛罗伦萨的文艺复兴氛围中，感受艺术与美食的交融。</p>
+                    <div class="route-footer">
+                        <div class="route-price">人均 <strong>¥32,800</strong> 起</div>
+                        <a href="#contact" class="route-btn" onclick="window.location.href='index.html#contact'">立即咨询</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="route-card" data-category="island">
+                <div class="route-img-wrap">
+                    <img src="images/dest-maldives.jpg" alt="马尔代夫" loading="lazy">
+                    <span class="route-tag">海岛</span>
+                </div>
+                <div class="route-body">
+                    <h3>马尔代夫 · 水上别墅蜜月之旅</h3>
+                    <div class="route-meta">
+                        <span><i class="fas fa-clock"></i> 7天6晚</span>
+                        <span><i class="fas fa-map-marker-alt"></i> 马尔代夫</span>
+                    </div>
+                    <p>入住顶级环礁水上别墅，私人泳池、玻璃地板、日落海豚巡航。为蜜月情侣打造的极致浪漫体验，一生一次的奢华回忆。</p>
+                    <div class="route-footer">
+                        <div class="route-price">人均 <strong>¥38,800</strong> 起</div>
+                        <a href="#contact" class="route-btn" onclick="window.location.href='index.html#contact'">立即咨询</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="route-card" data-category="island">
+                <div class="route-img-wrap">
+                    <img src="images/dest-maldives.jpg" alt="巴厘岛" loading="lazy">
+                    <span class="route-tag">海岛</span>
+                </div>
+                <div class="route-body">
+                    <h3>巴厘岛 · 疗愈与灵修之旅</h3>
+                    <div class="route-meta">
+                        <span><i class="fas fa-clock"></i> 6天5晚</span>
+                        <span><i class="fas fa-map-marker-alt"></i> 巴厘岛 / 乌布</span>
+                    </div>
+                    <p>入住乌布丛林深处的疗愈度假村，参加瑜伽冥想、能量疗愈、有机农场体验。在热带雨林中找回内心的平静与力量。</p>
+                    <div class="route-footer">
+                        <div class="route-price">人均 <strong>¥10,800</strong> 起</div>
+                        <a href="#contact" class="route-btn" onclick="window.location.href='index.html#contact'">立即咨询</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="route-card" data-category="asia">
+                <div class="route-img-wrap">
+                    <img src="images/dest-paris.jpg" alt="迪拜" loading="lazy">
+                    <span class="route-tag">亚洲</span>
+                </div>
+                <div class="route-body">
+                    <h3>迪拜 · 极致奢华体验之旅</h3>
+                    <div class="route-meta">
+                        <span><i class="fas fa-clock"></i> 6天5晚</span>
+                        <span><i class="fas fa-map-marker-alt"></i> 迪拜 / 阿布扎比</span>
+                    </div>
+                    <p>入住帆船酒店或亚特兰蒂斯，体验沙漠冲沙、私人直升机观光、黄金市场购物。感受中东的极致奢华与现代奇迹。</p>
+                    <div class="route-footer">
+                        <div class="route-price">人均 <strong>¥22,800</strong> 起</div>
+                        <a href="#contact" class="route-btn" onclick="window.location.href='index.html#contact'">立即咨询</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="page-footer">
+        <div class="container">
+            <p>&copy; 2026 KANG Voyages · 港客旅行社有限公司. 保留所有权利。</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            const routeCards = document.querySelectorAll('.route-card');
+
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+
+                    const filter = btn.dataset.filter;
+
+                    routeCards.forEach(card => {
+                        if (filter === 'all' || card.dataset.category === filter) {
+                            card.style.display = '';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>

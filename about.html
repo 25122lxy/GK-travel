@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>关于康康 | KANG Voyages</title>
+
+    <meta name="description" content="康康的故事 — 走遍30多个国家，十余年旅行经验，为您定制每一段真正属于自己的旅程。">
+    <meta name="robots" content="index, follow">
+
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        .page-nav {
+            position: fixed; top: 0; left: 0; width: 100%; height: var(--nav-height);
+            background-color: rgba(255,255,255,0.95); backdrop-filter: blur(15px);
+            box-shadow: 0 4px 20px rgba(255,139,167,0.1); z-index: 1000;
+        }
+        .page-nav .nav-container { display: flex; justify-content: space-between; align-items: center; height: 100%; }
+        .page-nav .logo { color: var(--primary); }
+        .page-hero {
+            padding-top: calc(var(--nav-height) + 80px); padding-bottom: 60px;
+            background-color: var(--accent); text-align: center;
+        }
+        .page-hero .section-subtitle { margin-bottom: 0.75rem; }
+        .page-hero h1 { font-size: 2.8rem; color: var(--primary); margin-bottom: 1rem; }
+        .page-hero .hero-desc { color: var(--text-light); font-size: 1.05rem; margin-bottom: 0; max-width: 600px; margin-left: auto; margin-right: auto; }
+        .about-section { max-width: 900px; margin: 0 auto; padding: 60px 24px 80px; }
+        .about-section h2 {
+            font-family: var(--font-heading); font-size: 1.8rem; color: var(--primary);
+            margin-bottom: 1.5rem; text-align: center;
+        }
+        .about-section p { font-size: 1rem; line-height: 1.9; color: var(--text-main); margin-bottom: 1.5rem; text-align: center; }
+        .founder-block {
+            display: flex; gap: 40px; align-items: center; margin: 50px 0; padding: 40px;
+            background-color: var(--accent); border-radius: 20px;
+        }
+        .founder-img {
+            flex-shrink: 0; width: 200px; height: 200px; border-radius: 50%;
+            background-color: var(--white); display: flex; align-items: center; justify-content: center;
+            font-size: 4rem; color: var(--secondary); box-shadow: 0 8px 25px rgba(255,139,167,0.1);
+            overflow: hidden;
+        }
+        .founder-img img { width: 100%; height: 100%; object-fit: cover; }
+        .founder-info h3 { font-size: 1.4rem; color: var(--primary); margin-bottom: 6px; }
+        .founder-info .founder-title { font-size: 0.85rem; color: var(--secondary); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 16px; }
+        .founder-info p { text-align: left; font-size: 0.95rem; line-height: 1.85; color: var(--text-main); margin-bottom: 0; }
+        .story-block {
+            margin: 50px 0; padding: 40px; background-color: var(--white);
+            border-radius: 20px; border-left: 4px solid var(--secondary);
+        }
+        .story-block p { text-align: left; margin-bottom: 1.2rem; }
+        .story-block p:last-child { margin-bottom: 0; }
+        .values-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin: 50px 0;
+        }
+        .value-card {
+            text-align: center; padding: 36px 24px; background-color: var(--white);
+            border-radius: 16px; box-shadow: 0 8px 25px rgba(255,139,167,0.06);
+            transition: var(--transition-fast);
+        }
+        .value-card:hover { transform: translateY(-5px); box-shadow: 0 16px 35px rgba(255,139,167,0.12); }
+        .value-card i { font-size: 2.2rem; color: var(--secondary); margin-bottom: 16px; }
+        .value-card h3 { font-size: 1.15rem; color: var(--primary); margin-bottom: 10px; }
+        .value-card p { font-size: 0.9rem; color: var(--text-light); margin-bottom: 0; text-align: center; }
+        .stats-row {
+            display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin: 50px 0; text-align: center;
+        }
+        .stat-item .stat-number { font-family: var(--font-heading); font-size: 2.5rem; color: var(--secondary); font-weight: 600; }
+        .stat-item .stat-label { font-size: 0.85rem; color: var(--text-light); margin-top: 6px; }
+        .cta-banner {
+            text-align: center; padding: 50px 30px; background-color: var(--accent);
+            border-radius: 20px; margin-top: 50px;
+        }
+        .cta-banner h3 { font-size: 1.6rem; color: var(--primary); margin-bottom: 12px; }
+        .cta-banner p { color: var(--text-main); margin-bottom: 24px; }
+        .cta-banner .btn { display: inline-block; }
+        .page-footer {
+            background-color: var(--white); border-top: 1px solid rgba(255,139,167,0.2);
+            padding: 30px 0; text-align: center;
+        }
+        .page-footer p { font-size: 0.85rem; color: var(--text-light); margin-bottom: 0; }
+        .btn-back {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 0.7rem 1.8rem; font-family: var(--font-body); font-size: 0.85rem;
+            letter-spacing: 1px; text-decoration: none; border: 1px solid var(--secondary);
+            color: var(--secondary); border-radius: 40px; transition: var(--transition-fast);
+        }
+        .btn-back:hover {
+            background-color: var(--secondary); color: var(--white);
+            transform: translateY(-2px); box-shadow: 0 6px 15px rgba(255,139,167,0.3);
+        }
+        @media (max-width: 768px) {
+            .page-hero h1 { font-size: 2rem; }
+            .about-section { padding: 40px 20px 60px; }
+            .founder-block { flex-direction: column; text-align: center; padding: 30px 20px; }
+            .founder-info p { text-align: center; }
+            .story-block { padding: 24px; }
+            .values-grid { grid-template-columns: 1fr; }
+            .stats-row { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .values-grid { grid-template-columns: repeat(2, 1fr); }
+            .stats-row { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        /* FAQ 样式 */
+        .faq-section { margin: 50px 0; }
+        .faq-category {
+            font-family: var(--font-heading); font-size: 1.3rem; color: var(--primary);
+            margin-top: 2.5rem; margin-bottom: 1rem; padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--accent);
+        }
+        .faq-item {
+            border-bottom: 1px solid rgba(255,139,167,0.15);
+        }
+        .faq-question {
+            display: flex; align-items: flex-start; gap: 14px; cursor: pointer;
+            font-family: var(--font-body); font-size: 1.05rem; color: var(--primary);
+            font-weight: 600; line-height: 1.4; padding: 18px 0; transition: color var(--transition-fast);
+        }
+        .faq-question:hover { color: var(--secondary); }
+        .faq-question .faq-icon {
+            flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%;
+            background-color: var(--accent); color: var(--secondary);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.75rem; transition: var(--transition-fast);
+        }
+        .faq-item.open .faq-icon {
+            background-color: var(--secondary); color: var(--white);
+            transform: rotate(180deg);
+        }
+        .faq-answer {
+            max-height: 0; overflow: hidden; transition: max-height 0.4s ease, padding 0.4s ease;
+            padding-left: 42px;
+        }
+        .faq-item.open .faq-answer {
+            max-height: 500px; padding-top: 0; padding-bottom: 18px;
+        }
+        .faq-answer p { font-size: 0.95rem; line-height: 1.85; color: var(--text-main); margin-bottom: 0; text-align: left; }
+        .faq-answer a { color: var(--secondary); text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <header class="page-nav">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                KANG <span>Voyages</span>
+                <small>港客旅行社有限公司</small>
+            </a>
+            <a href="index.html" class="btn-back"><i class="fas fa-arrow-left"></i> 返回首页</a>
+        </div>
+    </header>
+
+    <section class="page-hero">
+        <div class="container">
+            <span class="section-subtitle">About KANG</span>
+            <h1>关于康康</h1>
+            <p class="hero-desc">走遍30多个国家，用十余年的脚步丈量世界，只为给您一段真正属于自己的旅程。</p>
+        </div>
+    </section>
+
+    <main class="about-section">
+
+        <h2>品牌故事</h2>
+        <div class="story-block">
+            <p>一个热爱旅行的女孩把自己走了十几年的路，变成了帮别人规划旅程的事业。港客旅行社有限公司，是她想把这件事件认真做下去的地方。</p>
+            <p>从杭州出发，走过国内的大理、丽江，走过东南亚的寺庙与海滩，走过欧洲的古城与酒庄。每一次出发，她都在寻找那些攻略上找不到的角落——可能是巴黎左岸巷尾一家没有招牌的咖啡馆，可能是托斯卡纳山间一座只有当地人知道的酒庄，也可能是巴厘岛丛林深处一间连地图上都搜不到的疗愈小屋。</p>
+            <p>走了十几年，身边越来越多的朋友开始找她帮忙规划旅行。"你帮我安排的那次旅行，比我自己做攻略好玩一百倍。"这样的话她听了太多遍。于是她决定，把这件事做成自己的事业。</p>
+            <p>总部设在杭州——这座她出发的城市，也是每次旅行结束后最想回来的地方。西湖的四季、龙井的茶香、灵隐的钟声，是她心中"旅行"两个字最美的注解。她希望把这份对旅行的热爱，传递给每一个信任她的人。</p>
+        </div>
+
+        <div class="founder-block">
+            <div class="founder-img">
+                <!-- TODO: 替换为康康的真实照片，建议 400x400 正方形 -->
+                <i class="fas fa-user"></i>
+            </div>
+            <div class="founder-info">
+                <h3>康康</h3>
+                <p class="founder-title">旅行设计师</p>
+                <p>"很多人问我，做了这么多年旅行，最喜欢的地方是哪里。我想了想，其实没有'最'喜欢，因为每一次出发都有它独特的意义。但我可以确定的是，旅行最打动人的从来不是风景本身，而是你在风景里遇见的那个更自由的自己。我想做的，就是帮每一个人找到那个瞬间。"</p>
+            </div>
+        </div>
+
+        <div class="stats-row">
+            <div class="stat-item">
+                <div class="stat-number">10+</div>
+                <div class="stat-label">年行业经验</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">30+</div>
+                <div class="stat-label">覆盖国家与地区</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">100+</div>
+                <div class="stat-label">精选定制路线</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">1对1</div>
+                <div class="stat-label">全程专属管家</div>
+            </div>
+        </div>
+
+        <h2>为什么选择我们</h2>
+        <div class="values-grid">
+            <div class="value-card">
+                <i class="fas fa-gem"></i>
+                <h3>十余年实地经验</h3>
+                <p>每一条路线都是康康亲自走过、体验过、筛选过的。不是网上抄来的攻略，而是实打实的亲身感受。</p>
+            </div>
+            <div class="value-card">
+                <i class="fas fa-heart"></i>
+                <h3>女性细腻视角</h3>
+                <p>以女性对美的敏锐感知，甄选最出片的场景、最舒适的住宿、最安心的安全保障。</p>
+            </div>
+            <div class="value-card">
+                <i class="fas fa-shield-alt"></i>
+                <h3>一个人负责到底</h3>
+                <p>从初次沟通到行程结束，全程由康康本人或她亲自培训的团队跟进，不会出现"交单给第三方"的情况。</p>
+            </div>
+        </div>
+
+        <h2 id="faq">常见问题</h2>
+
+        <div class="faq-section">
+            <h3 class="faq-category">关于定制服务</h3>
+
+            <div class="faq-item open">
+                <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+                    <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
+                    定制旅行和跟团游有什么区别？
+                </div>
+                <div class="faq-answer">
+                    <p>定制旅行是完全根据您的个人喜好、时间安排和预算量身打造的专属行程。没有固定的出发日期和路线，不与陌生人拼团，全程由您的专属旅行管家一对一服务。从酒店选择到餐厅预订、从活动安排到交通衔接，每一个细节都由我们为您精心设计。</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+                    <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
+                    定制一次旅行需要多久？
+                </div>
+                <div class="faq-answer">
+                    <p>从初次沟通到方案定稿，通常需要 5-10 个工作日。如果是热门目的地或旺季出行，建议您至少提前 1-2 个月开始规划，以确保优质酒店和稀缺体验的可用性。</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+                    <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
+                    可以只定制行程的一部分吗？
+                </div>
+                <div class="faq-answer">
+                    <p>当然可以。如果您已经安排好了机票或部分住宿，我们可以为您补充目的地体验、餐厅预订、用车安排等单项服务。我们的服务非常灵活，完全围绕您的需求展开。</p>
+                </div>
+            </div>
+
+            <h3 class="faq-category">关于费用与付款</h3>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+                    <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
+                    定制旅行大概需要多少预算？
+                </div>
+                <div class="faq-answer">
+                    <p>费用取决于目的地、出行天数、酒店标准、体验内容等多种因素。国内精品游通常每人每天 2,000-8,000 元，海外奢华定制通常每人每天 5,000-20,000 元。我们会根据您的预算范围提供最优方案，确保每一分钱都花在体验上。</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+                    <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
+                    咨询和方案设计收费吗？
+                </div>
+                <div class="faq-answer">
+                    <p>初次咨询和首版方案设计完全免费。我们希望您在充分了解方案内容后，再决定是否与我们合作。只有在您确认方案并签署合同后，才需要支付相关费用。</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+                    <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
+                    支持哪些付款方式？
+                </div>
+                <div class="faq-answer">
+                    <p>我们支持银行转账、微信支付和支付宝。通常在签署合同时支付 30% 定金，出行前 15 天支付尾款。具体付款节奏可根据实际情况灵活调整。</p>
+                </div>
+            </div>
+
+            <h3 class="faq-category">关于行程与出行</h3>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+                    <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
+                    出行期间遇到问题怎么办？
+                </div>
+                <div class="faq-answer">
+                    <p>您的专属旅行管家在整个行程期间全程待命。无论是航班变动、酒店问题还是临时想调整行程，随时通过微信或电话联系管家，我们会第一时间为您协调解决。</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+                    <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
+                    可以临时取消或更改行程吗？
+                </div>
+                <div class="faq-answer">
+                    <p>可以，但根据取消时间的不同，可能会产生一定的退改费用。出行前 30 天以上取消可退还 90% 费用，越接近出发日期退款比例越低。详细的退改政策请参阅我们的<a href="terms.html">服务条款</a>。</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+                    <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
+                    需要自己办签证吗？
+                </div>
+                <div class="faq-answer">
+                    <p>我们提供签证办理咨询与协助服务。根据您的目的地，我们会告知所需材料、办理流程和时间节点，并可协助代办（部分国家签证需本人前往签证中心）。签证费用通常不包含在行程报价中，按实际产生费用另计。</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="cta-banner">
+            <h3>准备好开启您的专属旅程了吗？</h3>
+            <p>直接和康康聊聊您的旅行想法，即刻开始规划。</p>
+            <a href="index.html#contact" class="btn btn-primary">联系康康</a>
+        </div>
+
+    </main>
+
+    <footer class="page-footer">
+        <div class="container">
+            <p>&copy; 2026 KANG Voyages · 港客旅行社有限公司. 保留所有权利。</p>
+        </div>
+    </footer>
+
+</body>
+</html>
